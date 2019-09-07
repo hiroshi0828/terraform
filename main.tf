@@ -6,6 +6,7 @@ provider "aws" {
 module "dev_server" {
   source        = "./http_server"
   instance_type = "t2.micro"
+  subnet_id     = aws_subnet.public.id
 }
 output "public_dns" {
   value = module.dev_server.public_dns
@@ -42,8 +43,8 @@ resource "aws_s3_bucket_public_access_block" "private" {
   ignore_public_acls      = true
   restrict_public_buckets = true
 }
-resource "aws_s3_bucket" "public" {
-  bucket = "public-pragmatic-terraform-on-aws_hiroshi"
+resource "aws_s3_bucket" "public-hiroshi" {
+  bucket = "public-pragmatic-terraform-on-aws-hiroshi"
   acl    = "public-read"
 
   cors_rule {
